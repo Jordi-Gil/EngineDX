@@ -12,45 +12,54 @@
 // window resizing, and fullscreen toggling. Provides access to core D3D12
 // objects.
 //-----------------------------------------------------------------------------
+
+namespace DirectX
+{
+    inline namespace DX12
+    {
+        class GraphicsMemory;
+    }
+}
+
 class ModuleD3D12 : public Module
 {   
 
 private:
 
-    HWND                                hWnd = NULL ;
-    ComPtr<IDXGIFactory6>               factory;
-    ComPtr<IDXGIAdapter4>               adapter;
-    ComPtr<ID3D12Device5>               device;
+    HWND                                            hWnd = NULL ;
+    ComPtr<IDXGIFactory6>                           factory;
+    ComPtr<IDXGIAdapter4>                           adapter;
+    ComPtr<ID3D12Device5>                           device;
 
-    ComPtr<IDXGISwapChain4>             swapChain;
-    ComPtr<ID3D12DescriptorHeap>        rtDescriptorHeap;
-    ComPtr<ID3D12Resource>              backBuffers[FRAMES_IN_FLIGHT];
-    ComPtr<ID3D12DescriptorHeap>        dsDescriptorHeap;
-    ComPtr<ID3D12Resource>              depthStencilBuffer;
+    ComPtr<IDXGISwapChain4>                         swapChain;
+    ComPtr<ID3D12DescriptorHeap>                    rtDescriptorHeap;
+    ComPtr<ID3D12Resource>                          backBuffers[FRAMES_IN_FLIGHT];
+    ComPtr<ID3D12DescriptorHeap>                    dsDescriptorHeap;
+    ComPtr<ID3D12Resource>                          depthStencilBuffer;
 
-    ComPtr<ID3D12CommandAllocator>      commandAllocators[FRAMES_IN_FLIGHT];
-    ComPtr<ID3D12GraphicsCommandList4>  commandList;
-    ComPtr<ID3D12CommandQueue>          drawCommandQueue;
+    ComPtr<ID3D12CommandAllocator>                  commandAllocators[FRAMES_IN_FLIGHT];
+    ComPtr<ID3D12GraphicsCommandList4>              commandList;
+    ComPtr<ID3D12CommandQueue>                      drawCommandQueue;
 
-    ComPtr<ID3D12Fence1>                drawFence;
-    HANDLE                              drawEvent = NULL;
-    unsigned                            drawFenceCounter = 0;
-    unsigned                            drawFenceValues[FRAMES_IN_FLIGHT] = { 0, 0, 0 };
+    ComPtr<ID3D12Fence1>                            drawFence;
+    HANDLE                                          drawEvent = NULL;
+    unsigned                                        drawFenceCounter = 0;
+    unsigned                                        drawFenceValues[FRAMES_IN_FLIGHT] = { 0, 0, 0 };
 
-    unsigned                            frameValues[FRAMES_IN_FLIGHT] = { 0, 0, 0 };
-    unsigned                            frameIndex = 0; 
-    unsigned                            lastCompletedFrame = 0;
+    unsigned                                        frameValues[FRAMES_IN_FLIGHT] = { 0, 0, 0 };
+    unsigned                                        frameIndex = 0; 
+    unsigned                                        lastCompletedFrame = 0;
 
-    bool                                allowTearing = false;
-    bool                                supportsRT = false;
-    unsigned                            currentBackBufferIdx = 0;
+    bool                                            allowTearing = false;
+    bool                                            supportsRT = false;
+    unsigned                                        currentBackBufferIdx = 0;
 
-    unsigned                            windowWidth  = 0;
-    unsigned                            windowHeight = 0;
-    bool                                fullscreen  = false;
-    RECT                                lastWindowRect;
+    unsigned                                        windowWidth  = 0;
+    unsigned                                        windowHeight = 0;
+    bool                                            fullscreen  = false;
+    RECT                                            lastWindowRect;
     
-
+    std::unique_ptr<DirectX::DX12::GraphicsMemory>  graphicsMemory;
 public:
 
     ModuleD3D12(HWND hWnd);
@@ -75,6 +84,9 @@ public:
     ID3D12CommandQueue*         getDrawCommandQueue() { return drawCommandQueue.Get(); }
 
     unsigned                    getCurrentBackBufferIdx() const {return currentBackBufferIdx; }
+
+    DXGI_FORMAT                 getBackBufferFormat() { return DXGI_FORMAT_R8G8B8A8_UNORM; }
+    DXGI_FORMAT                 getDepthStencilBufferFormat() { return DXGI_FORMAT_D32_FLOAT; }
 
     D3D12_CPU_DESCRIPTOR_HANDLE getRenderTargetDescriptor();
     D3D12_CPU_DESCRIPTOR_HANDLE getDepthStencilDescriptor();

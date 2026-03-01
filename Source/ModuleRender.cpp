@@ -20,6 +20,7 @@
 #include "DeferredPass.h"
 #include "RenderTexture.h"
 #include "SkinningPass.h"
+#include "SpritePass.h"
 
 
 ModuleRender::ModuleRender()
@@ -38,6 +39,13 @@ bool ModuleRender::init()
 
     debugDesc       = app->getShaderDescriptors()->allocTable();
 
+    spriteDesc.init(app->getShaderDescriptors()->allocTable(), app->getShaderDescriptors()->allocTable());
+
+    std::vector<const wchar_t*> fonts;
+    fonts.push_back(L"./Assets/Fonts/arial.spritefont");
+
+    std::vector<const wchar_t*> sprites;
+
     debugDrawPass   = std::make_unique<DebugDrawPass>(d3d12->getDevice(), d3d12->getDrawCommandQueue(), false, debugDesc.getCPUHandle(0), debugDesc.getGPUHandle(0));
     imguiPass       = std::make_unique<ImGuiPass>(d3d12->getDevice(), d3d12->getHWnd(), debugDesc.getCPUHandle(1), debugDesc.getGPUHandle(1));
     renderTexture   = std::make_unique<RenderTexture>("ModuleRender", DXGI_FORMAT_R8G8B8A8_UNORM, Vector4(0.188f, 0.208f, 0.259f, 1.0f), DXGI_FORMAT_UNKNOWN, 1.0f, false, false);
@@ -45,6 +53,7 @@ bool ModuleRender::init()
     gbufferPass     = std::make_unique<GBufferExportPass>();
     deferredPass    = std::make_unique<DeferredPass>();
     skinningPass    = std::make_unique<SkinningPass>();
+    spritePass = std::make_unique<SpritePass>(spriteDesc, fonts, sprites);
 
     bool ok = renderMeshPass->init(false);
     ok = ok && gbufferPass->init();
@@ -107,6 +116,7 @@ void ModuleRender::preRender()
         UINT sizeY = UINT(canvasSize.y);
         renderTexture->resize(sizeX, sizeY);
         gbufferPass->resize(sizeX, sizeY);
+        spritePass->resize(canvasSize.x, canvasSize.y);
     }
 
     ModuleD3D12* d3d12 = app->getD3D12();
@@ -115,7 +125,7 @@ void ModuleRender::preRender()
 
     ModuleScene* scene = app->getScene();
 
-    if (scene && scene->getModelCount() > 0)
+    //if (scene && scene->getModelCount() > 0)
     {
         imGuiDrawCommands();
         debugDrawCommands();
@@ -275,6 +285,16 @@ void ModuleRender::renderDeferred(ID3D12GraphicsCommandList* commandList)
     }
 }
 
+void ModuleRender::renderSprites(ID3D12GraphicsCommandList* commandList)
+{
+    spritePass->beginRender(commandList);
+
+    // Draw here your text
+    spritePass->renderText(L"Hello World", 0, { canvasSize.x * 0.5f, canvasSize.y * 0.5f });
+
+    spritePass->endRender(commandList);
+}
+
 void ModuleRender::renderToTexture(ID3D12GraphicsCommandList* commandList, const Matrix& view, const Matrix& proj)
 {
     BEGIN_EVENT(commandList, "Render Scene to Texture");
@@ -294,6 +314,9 @@ void ModuleRender::renderToTexture(ID3D12GraphicsCommandList* commandList, const
 
     // Debug Draw
     debugDrawPass->record(commandList, renderTexture->getWidth(), renderTexture->getHeight(), view, proj);
+
+    // Fonts pass
+    renderSprites(commandList);
 
     // Transition to SRV
     renderTexture->endRender(commandList);

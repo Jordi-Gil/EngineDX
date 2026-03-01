@@ -243,6 +243,8 @@
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="SkyboxRenderPass.h" />
     <ClInclude Include="SphereMesh.h" />
+    <ClInclude Include="SpriteDescriptors.h" />
+    <ClInclude Include="SpritePass.h" />
     <ClInclude Include="StartMenu.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -395,6 +397,8 @@
     <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="SkyboxRenderPass.cpp" />
     <ClCompile Include="SphereMesh.cpp" />
+    <ClCompile Include="SpriteDescriptors.cpp" />
+    <ClCompile Include="SpritePass.cpp" />
     <ClCompile Include="StartMenu.cpp" />
   </ItemGroup>
   <ItemGroup>

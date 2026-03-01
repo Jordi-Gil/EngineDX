@@ -2,6 +2,7 @@
 
 #include "Module.h"
 #include "ShaderTableDesc.h"
+#include "SpriteDescriptors.h"
 
 #include<memory>
 #include<vector>
@@ -14,6 +15,7 @@ class GBufferExportPass;
 class DeferredPass;
 class RenderTexture;
 class SkinningPass;
+class SpritePass;
 struct RenderMesh;
 
 class ModuleRender : public Module
@@ -36,6 +38,7 @@ class ModuleRender : public Module
     std::unique_ptr<GBufferExportPass>  gbufferPass;
     std::unique_ptr<DeferredPass>       deferredPass;
     std::unique_ptr<SkinningPass>       skinningPass;
+    std::unique_ptr<SpritePass>         spritePass;
 
     std::vector<RenderMesh>             renderList;
     D3D12_GPU_VIRTUAL_ADDRESS           perFrameAddress = {};
@@ -53,6 +56,7 @@ class ModuleRender : public Module
     Vector4 frustumPlanes[6];
     std::unique_ptr<RenderTexture> renderTexture;
     ShaderTableDesc debugDesc;
+    SpriteDescriptors spriteDesc;
 
     BoundingFrustum trackedFrustum;
     UINT quadTreeLevel = 0;
@@ -78,6 +82,7 @@ private:
     void renderMeshesForward(ID3D12GraphicsCommandList* commandList, const Matrix& view, const Matrix& proj);
     void renderMeshesGBuffer(ID3D12GraphicsCommandList* commandList, const Matrix& view, const Matrix& proj);
     void renderDeferred(ID3D12GraphicsCommandList* commandList);
+    void renderSprites(ID3D12GraphicsCommandList* commandList);
 
     void updatePerFrameBuffer(const Matrix& view, const Matrix& projection, const Matrix& invView);
     void updateSkinning(ID3D12GraphicsCommandList* commandList);

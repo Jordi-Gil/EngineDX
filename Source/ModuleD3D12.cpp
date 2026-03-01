@@ -7,6 +7,7 @@
 #include "ModuleShaderDescriptors.h"
 
 #include "d3dx12.h"
+#include "GraphicsMemory.h"
 
 ModuleD3D12::ModuleD3D12(HWND wnd) : hWnd(wnd)
 {
@@ -75,10 +76,9 @@ void ModuleD3D12::preRender()
 }
 
 void ModuleD3D12::postRender()
-
 {
     swapChain->Present(0, allowTearing ? DXGI_PRESENT_ALLOW_TEARING : 0);
-
+    graphicsMemory->Commit(getDrawCommandQueue());
     signalDrawQueue();
 }
 
@@ -222,6 +222,9 @@ bool ModuleD3D12::createDevice(bool useWarp)
         {
             supportsRT = true;
         }
+
+        graphicsMemory = std::make_unique<DirectX::DX12::GraphicsMemory>(device.Get());
+
     }
 
     return ok;
@@ -284,7 +287,7 @@ bool ModuleD3D12::createSwapChain()
     DXGI_SWAP_CHAIN_DESC1 swapChainDesc = {};
     swapChainDesc.Width = windowWidth;
     swapChainDesc.Height = windowHeight;
-    swapChainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+    swapChainDesc.Format = getBackBufferFormat();
     swapChainDesc.Stereo = FALSE;
     swapChainDesc.SampleDesc = { 1, 0 };
     swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
@@ -310,11 +313,11 @@ bool ModuleD3D12::createSwapChain()
 bool ModuleD3D12::createDepthStencil()
 {
     D3D12_CLEAR_VALUE clearValue = {};
-    clearValue.Format = DXGI_FORMAT_D32_FLOAT;
+    clearValue.Format = getDepthStencilBufferFormat();
     clearValue.DepthStencil.Depth = 1.0f;
     clearValue.DepthStencil.Stencil = 0;
     CD3DX12_HEAP_PROPERTIES heapProps = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
-    CD3DX12_RESOURCE_DESC desc = CD3DX12_RESOURCE_DESC::Tex2D(DXGI_FORMAT_D32_FLOAT, windowWidth, windowHeight, 1, 0, 1, 0, D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL | D3D12_RESOURCE_FLAG_DENY_SHADER_RESOURCE);
+    CD3DX12_RESOURCE_DESC desc = CD3DX12_RESOURCE_DESC::Tex2D(getDepthStencilBufferFormat(), windowWidth, windowHeight, 1, 0, 1, 0, D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL | D3D12_RESOURCE_FLAG_DENY_SHADER_RESOURCE);
 
     bool ok = SUCCEEDED(device->CreateCommittedResource(&heapProps, D3D12_HEAP_FLAG_NONE, &desc, D3D12_RESOURCE_STATE_DEPTH_WRITE, &clearValue, IID_PPV_ARGS(&depthStencilBuffer)));
 

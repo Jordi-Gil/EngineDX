@@ -226,6 +226,12 @@
     <ClCompile Include="DeferredPass.cpp">
       <Filter>Passes</Filter>
     </ClCompile>
+    <ClCompile Include="SpritePass.cpp">
+      <Filter>Passes</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteDescriptors.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineDX.h">
@@ -319,9 +325,6 @@
       <Filter>imgui</Filter>
     </ClInclude>
     <ClInclude Include="ModuleRingBuffer.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleShaderDescriptors.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="HandleManager.h">
@@ -473,6 +476,15 @@
     </ClInclude>
     <ClInclude Include="DeferredPass.h">
       <Filter>Passes</Filter>
+    </ClInclude>
+    <ClInclude Include="SpritePass.h">
+      <Filter>Passes</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleShaderDescriptors.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteDescriptors.h">
+      <Filter>Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
