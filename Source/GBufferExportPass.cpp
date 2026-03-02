@@ -38,64 +38,65 @@ void GBufferExportPass::render(ID3D12GraphicsCommandList* commandList, std::span
 {
     BEGIN_EVENT(commandList, "GBufferExport Pass");
 
-    if (!meshes.empty())
+    ModuleRingBuffer* ringBuffer = app->getRingBuffer();
+    ModuleSamplers* samplers = app->getSamplers();
+
+    commandList->SetGraphicsRootSignature(rootSignature.Get());
+    commandList->SetPipelineState(pso.Get());
+
+    gBuffer.beginRender(commandList);
+
+    commandList->SetGraphicsRootDescriptorTable(SLOT_SAMPLERS, samplers->getGPUHandle(ModuleSamplers::LINEAR_WRAP));
+    commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+    for (const RenderMesh& mesh : meshes)
     {
-        ModuleRingBuffer* ringBuffer = app->getRingBuffer();
-        ModuleSamplers* samplers = app->getSamplers();
-
-        commandList->SetGraphicsRootSignature(rootSignature.Get());
-        commandList->SetPipelineState(pso.Get());
-
-        gBuffer.beginRender(commandList);
-
-        commandList->SetGraphicsRootDescriptorTable(SLOT_SAMPLERS, samplers->getGPUHandle(ModuleSamplers::LINEAR_WRAP));
-        commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-        for (const RenderMesh& mesh : meshes)
+        if (mesh.material)
         {
-            if (mesh.material)
+            Matrix mvp;
+
+            PerInstance perInstance;
+
+            if (mesh.numJoints > 0) // skinned mesh
             {
-                Matrix mvp = (mesh.transform * viewProjection).Transpose();
-                commandList->SetGraphicsRoot32BitConstants(SLOT_MVP_MATRIX, sizeof(Matrix) / sizeof(UINT32), &mvp, 0);
+                // Note: Skinned mesh has already bee transformed in the skinning pass 
+                mvp = (viewProjection).Transpose();
+                perInstance.modelMat = Matrix::Identity;
+                perInstance.normalMat = Matrix::Identity;
 
-                PerInstance perInstance;
-                perInstance.material = mesh.material->getData();
+                D3D12_VERTEX_BUFFER_VIEW vertexBufferView = mesh.mesh->getVertexBufferView();
+                vertexBufferView.BufferLocation = skinningBuffer + mesh.skinningOffset;
 
-                commandList->SetGraphicsRootConstantBufferView(SLOT_PER_INSTANCE_CB, ringBuffer->alloc(&perInstance));
-                commandList->SetGraphicsRootDescriptorTable(SLOT_TEXTURES_TABLE, mesh.material->getTextureTable());
+                commandList->IASetVertexBuffers(0, 1, &vertexBufferView);
+            }
+            else // rigid mesh
+            {
+                mvp = (mesh.transform * viewProjection).Transpose();
+                perInstance.modelMat = mesh.transform.Transpose();
+                perInstance.normalMat = mesh.normalMatrix.Transpose();
 
-                if (mesh.numJoints > 0) // skinned mesh
-                {
-                    perInstance.modelMat = Matrix::Identity;
-                    perInstance.normalMat = Matrix::Identity;
+                commandList->IASetVertexBuffers(0, 1, &mesh.mesh->getVertexBufferView());
+            }
 
-                    D3D12_VERTEX_BUFFER_VIEW vertexBufferView = mesh.mesh->getVertexBufferView();
-                    vertexBufferView.BufferLocation = skinningBuffer + mesh.skinningOffset;
+            perInstance.material = mesh.material->getData();
 
-                    commandList->IASetVertexBuffers(0, 1, &vertexBufferView);
-                }
-                else // rigid mesh
-                {
-                    perInstance.modelMat = mesh.transform.Transpose();
-                    perInstance.normalMat = mesh.normalMatrix.Transpose();
+            commandList->SetGraphicsRoot32BitConstants(SLOT_MVP_MATRIX, sizeof(Matrix) / sizeof(UINT32), &mvp, 0);
+            commandList->SetGraphicsRootConstantBufferView(SLOT_PER_INSTANCE_CB, ringBuffer->alloc(&perInstance));
+            commandList->SetGraphicsRootDescriptorTable(SLOT_TEXTURES_TABLE, mesh.material->getTextureTable());
 
-                    commandList->IASetVertexBuffers(0, 1, &mesh.mesh->getVertexBufferView());
-                }
-
-                if (mesh.mesh->getNumIndices() > 0) // indexed draw
-                {
-                    commandList->IASetIndexBuffer(&mesh.mesh->getIndexBufferView());
-                    commandList->DrawIndexedInstanced(mesh.mesh->getNumIndices(), 1, 0, 0, 0);
-                }
-                else if (mesh.mesh->getNumVertices() > 0) // non-indexed draw
-                {
-                    commandList->DrawInstanced(mesh.mesh->getNumVertices(), 1, 0, 0);
-                }
+            if (mesh.mesh->getNumIndices() > 0) // indexed draw
+            {
+                commandList->IASetIndexBuffer(&mesh.mesh->getIndexBufferView());
+                commandList->DrawIndexedInstanced(mesh.mesh->getNumIndices(), 1, 0, 0, 0);
+            }
+            else if (mesh.mesh->getNumVertices() > 0) // non-indexed draw
+            {
+                commandList->DrawInstanced(mesh.mesh->getNumVertices(), 1, 0, 0);
             }
         }
-
-        gBuffer.endRender(commandList);
     }
+
+    gBuffer.endRender(commandList);
 
     END_EVENT(commandList);
 }
