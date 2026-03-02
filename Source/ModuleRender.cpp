@@ -41,9 +41,6 @@ bool ModuleRender::init()
 
     spriteDesc.init(app->getShaderDescriptors()->allocTable(), app->getShaderDescriptors()->allocTable());
 
-    std::vector<const wchar_t*> fonts;
-    fonts.push_back(L"./Assets/Fonts/arial.spritefont");
-
     std::vector<const wchar_t*> sprites;
 
     debugDrawPass   = std::make_unique<DebugDrawPass>(d3d12->getDevice(), d3d12->getDrawCommandQueue(), false, debugDesc.getCPUHandle(0), debugDesc.getGPUHandle(0));
@@ -53,7 +50,7 @@ bool ModuleRender::init()
     gbufferPass     = std::make_unique<GBufferExportPass>();
     deferredPass    = std::make_unique<DeferredPass>();
     skinningPass    = std::make_unique<SkinningPass>();
-    spritePass = std::make_unique<SpritePass>(spriteDesc, fonts, sprites);
+    spritePass = std::make_unique<SpritePass>(spriteDesc);
 
     bool ok = renderMeshPass->init(false);
     ok = ok && gbufferPass->init();
@@ -125,7 +122,7 @@ void ModuleRender::preRender()
 
     ModuleScene* scene = app->getScene();
 
-    //if (scene && scene->getModelCount() > 0)
+    if (scene && scene->isValid())
     {
         imGuiDrawCommands();
         debugDrawCommands();
@@ -279,12 +276,9 @@ void ModuleRender::renderDeferred(ID3D12GraphicsCommandList* commandList)
 
 void ModuleRender::renderSprites(ID3D12GraphicsCommandList* commandList)
 {
-    spritePass->beginRender(commandList);
-
-    // Draw here your text
-    spritePass->renderText(L"Hello World", 0, { canvasSize.x * 0.5f, canvasSize.y * 0.5f });
-
-    spritePass->endRender(commandList);
+    ModuleScene* scene = app->getScene();
+    _ASSERTE(scene != nullptr);
+    spritePass->record(commandList, scene->getLabels());
 }
 
 void ModuleRender::renderToTexture(ID3D12GraphicsCommandList* commandList, const Matrix& view, const Matrix& proj)

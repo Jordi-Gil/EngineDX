@@ -232,6 +232,15 @@
     <ClCompile Include="SpriteDescriptors.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="DemoSprites.cpp">
+      <Filter>Demos</Filter>
+    </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleFonts.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineDX.h">
@@ -484,6 +493,18 @@
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="SpriteDescriptors.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="DemoSprites.h">
+      <Filter>Demos</Filter>
+    </ClInclude>
+    <ClInclude Include="Label.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleFonts.h">
       <Filter>Modules</Filter>
     </ClInclude>
   </ItemGroup>

@@ -11,12 +11,14 @@
 #include "ModuleStaticBuffer.h"
 #include "ModuleScene.h"
 #include "ModuleRender.h"
+#include "ModuleFonts.h"
 #include "DemoDescriptors.h"
 
 #include "StartMenu.h"  
 
 Application::Application(int argc, wchar_t** argv, void* hWnd)
 {
+    modules.push_back(fonts = new ModuleFonts());
     modules.push_back(d3d12 = new ModuleD3D12((HWND)hWnd));
     modules.push_back(new ModuleInput((HWND)hWnd));
     modules.push_back(camera = new ModuleCamera());

@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "Model.h"
 #include "Skybox.h"
+#include "Label.h"
 
 ModuleScene::ModuleScene()
 {
@@ -57,4 +58,9 @@ UINT ModuleScene::addClip(const char* filePath, UINT animationIndex)
 
     animations.push_back(newClip);
     return static_cast<UINT>(animations.size() - 1);
+}
+
+void ModuleScene::addLabel(Label label)
+{
+    labels.push_back(label);
 }

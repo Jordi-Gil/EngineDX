@@ -183,6 +183,7 @@
     <ClInclude Include="DemoAnimation.h" />
     <ClInclude Include="DemoDescriptors.h" />
     <ClInclude Include="DemoSkinning.h" />
+    <ClInclude Include="DemoSprites.h" />
     <ClInclude Include="DepthStencilDesc.h" />
     <ClInclude Include="EngineDX.h" />
     <ClInclude Include="EnvironmentBRDFPass.h" />
@@ -199,6 +200,7 @@
     <ClInclude Include="Exercises\Exercise7.h" />
     <ClInclude Include="Exercises\Exercise8.h" />
     <ClInclude Include="Exercises\Exercise9.h" />
+    <ClInclude Include="Font.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GamePad.h" />
     <ClInclude Include="GBuffer.h" />
@@ -210,6 +212,7 @@
     <ClInclude Include="ImGuiPass.h" />
     <ClInclude Include="IrradianceMapPass.h" />
     <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="Label.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="MathUtils.h" />
     <ClInclude Include="Mesh.h" />
@@ -217,6 +220,7 @@
     <ClInclude Include="Module.h" />
     <ClInclude Include="ModuleCamera.h" />
     <ClInclude Include="ModuleD3D12.h" />
+    <ClInclude Include="ModuleFonts.h" />
     <ClInclude Include="ModuleInput.h" />
     <ClInclude Include="ModuleRender.h" />
     <ClInclude Include="ModuleResources.h" />
@@ -331,6 +335,7 @@
     <ClCompile Include="DemoAnimation.cpp" />
     <ClCompile Include="DemoDescriptors.cpp" />
     <ClCompile Include="DemoSkinning.cpp" />
+    <ClCompile Include="DemoSprites.cpp" />
     <ClCompile Include="DepthStencilDesc.cpp" />
     <ClCompile Include="EngineDX.cpp" />
     <ClCompile Include="EnvironmentBRDFPass.cpp" />
@@ -347,6 +352,7 @@
     <ClCompile Include="Exercises\Exercise7.cpp" />
     <ClCompile Include="Exercises\Exercise8.cpp" />
     <ClCompile Include="Exercises\Exercise9.cpp" />
+    <ClCompile Include="Font.cpp" />
     <ClCompile Include="GamePad.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -371,6 +377,7 @@
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ModuleCamera.cpp" />
     <ClCompile Include="ModuleD3D12.cpp" />
+    <ClCompile Include="ModuleFonts.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModuleRender.cpp" />
     <ClCompile Include="ModuleResources.cpp" />

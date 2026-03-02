@@ -18,6 +18,7 @@ class ModuleTargetDescriptors;
 class ModuleSamplers;
 class ModuleRingBuffer;
 class ModuleStaticBuffer;
+class ModuleFonts;
 
 class Application
 {
@@ -40,6 +41,7 @@ public:
     ModuleSamplers*             getSamplers() { return samplers;  }
     ModuleStaticBuffer*         getStaticBuffer() { return staticBuffer;  }
     ModuleScene*                getScene() { return scene; }
+    ModuleFonts*                getFonts() { return fonts; }
 
     void                        swapModule(Module* from, Module* to) { swapModules.push_back(std::make_pair(from, to)); }
 
@@ -59,16 +61,17 @@ private:
     std::vector<Module*> modules;
     std::vector<std::pair<Module*, Module*> > swapModules;
 
-    ModuleD3D12* d3d12 = nullptr;
-    ModuleCamera* camera = nullptr;
-    ModuleRender* render = nullptr;
-    ModuleResources* resources = nullptr;
-    ModuleStaticBuffer* staticBuffer = nullptr;
-    ModuleShaderDescriptors* shaderDescriptors = nullptr;
-    ModuleTargetDescriptors* targetDescriptors = nullptr;
-    ModuleSamplers* samplers = nullptr;
-    ModuleRingBuffer* ringBuffer = nullptr;
-    ModuleScene*  scene = nullptr;
+    ModuleD3D12*                d3d12 = nullptr;
+    ModuleCamera*               camera = nullptr;
+    ModuleRender*               render = nullptr;
+    ModuleResources*            resources = nullptr;
+    ModuleStaticBuffer*         staticBuffer = nullptr;
+    ModuleShaderDescriptors*    shaderDescriptors = nullptr;
+    ModuleTargetDescriptors*    targetDescriptors = nullptr;
+    ModuleSamplers*             samplers = nullptr;
+    ModuleRingBuffer*           ringBuffer = nullptr;
+    ModuleScene*                scene = nullptr;
+    ModuleFonts*                fonts = nullptr;
 
     uint64_t  lastMilis = 0;
     TickList  tickList;
