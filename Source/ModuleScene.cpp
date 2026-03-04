@@ -4,6 +4,7 @@
 #include "AnimationClip.h"
 
 #include "Application.h"
+#include "Script.h"
 #include "Scene.h"
 #include "Model.h"
 #include "Skybox.h"
@@ -41,6 +42,14 @@ void ModuleScene::update()
 void ModuleScene::preRender()
 {
     scene->updateWorldTransforms();
+}
+
+UINT ModuleScene::addScript(const std::string& scriptName)
+{
+    std::shared_ptr<Script> newScript(scene->createScript(scriptName));
+    
+    scripts.push_back(newScript);
+    return static_cast<UINT>(scripts.size() - 1);
 }
 
 UINT ModuleScene::addModel(const char* filePath, const char* basePath)

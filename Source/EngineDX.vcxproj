@@ -176,12 +176,14 @@
     <ClInclude Include="BasicMaterial.h" />
     <ClInclude Include="BasicMesh.h" />
     <ClInclude Include="BasicModel.h" />
+    <ClInclude Include="Creator.h" />
     <ClInclude Include="CubemapMesh.h" />
     <ClInclude Include="DebugDrawPass.h" />
     <ClInclude Include="debug_draw.hpp" />
     <ClInclude Include="DeferredPass.h" />
     <ClInclude Include="DemoAnimation.h" />
     <ClInclude Include="DemoDescriptors.h" />
+    <ClInclude Include="DemoScripting.h" />
     <ClInclude Include="DemoSkinning.h" />
     <ClInclude Include="DemoSprites.h" />
     <ClInclude Include="DepthStencilDesc.h" />
@@ -200,9 +202,11 @@
     <ClInclude Include="Exercises\Exercise7.h" />
     <ClInclude Include="Exercises\Exercise8.h" />
     <ClInclude Include="Exercises\Exercise9.h" />
+    <ClInclude Include="Factory.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GamePad.h" />
+    <ClInclude Include="GameplaySystems.h" />
     <ClInclude Include="GBuffer.h" />
     <ClInclude Include="GBufferExportPass.h" />
     <ClInclude Include="Globals.h" />
@@ -215,12 +219,14 @@
     <ClInclude Include="Label.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="MathUtils.h" />
+    <ClInclude Include="Member.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="ModuleCamera.h" />
     <ClInclude Include="ModuleD3D12.h" />
     <ClInclude Include="ModuleFonts.h" />
+    <ClInclude Include="ModuleGameplaySystems.h" />
     <ClInclude Include="ModuleInput.h" />
     <ClInclude Include="ModuleRender.h" />
     <ClInclude Include="ModuleResources.h" />
@@ -241,6 +247,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Ring.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="Script.h" />
     <ClInclude Include="ShaderTableDesc.h" />
     <ClInclude Include="SimpleMath.h" />
     <ClInclude Include="SkinningPass.h" />
@@ -334,6 +341,7 @@
     <ClCompile Include="DeferredPass.cpp" />
     <ClCompile Include="DemoAnimation.cpp" />
     <ClCompile Include="DemoDescriptors.cpp" />
+    <ClCompile Include="DemoScripting.cpp" />
     <ClCompile Include="DemoSkinning.cpp" />
     <ClCompile Include="DemoSprites.cpp" />
     <ClCompile Include="DepthStencilDesc.cpp" />
@@ -352,6 +360,7 @@
     <ClCompile Include="Exercises\Exercise7.cpp" />
     <ClCompile Include="Exercises\Exercise8.cpp" />
     <ClCompile Include="Exercises\Exercise9.cpp" />
+    <ClCompile Include="Factory.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="GamePad.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
@@ -361,6 +370,7 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="GameplaySystems.cpp" />
     <ClCompile Include="GBuffer.cpp" />
     <ClCompile Include="GBufferExportPass.cpp" />
     <ClCompile Include="Globals.cpp">
@@ -373,11 +383,13 @@
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="MathUtils.cpp" />
+    <ClCompile Include="Member.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ModuleCamera.cpp" />
     <ClCompile Include="ModuleD3D12.cpp" />
     <ClCompile Include="ModuleFonts.cpp" />
+    <ClCompile Include="ModuleGameplaySystems.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModuleRender.cpp" />
     <ClCompile Include="ModuleResources.cpp" />

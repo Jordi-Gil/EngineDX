@@ -19,6 +19,7 @@ class ModuleSamplers;
 class ModuleRingBuffer;
 class ModuleStaticBuffer;
 class ModuleFonts;
+class ModuleGameplaySystems;
 
 class Application
 {
@@ -42,6 +43,7 @@ public:
     ModuleStaticBuffer*         getStaticBuffer() { return staticBuffer;  }
     ModuleScene*                getScene() { return scene; }
     ModuleFonts*                getFonts() { return fonts; }
+    ModuleGameplaySystems*      getGameplaySystems() { return gameplaySystems; }
 
     void                        swapModule(Module* from, Module* to) { swapModules.push_back(std::make_pair(from, to)); }
 
@@ -72,6 +74,7 @@ private:
     ModuleRingBuffer*           ringBuffer = nullptr;
     ModuleScene*                scene = nullptr;
     ModuleFonts*                fonts = nullptr;
+    ModuleGameplaySystems*      gameplaySystems = nullptr;
 
     uint64_t  lastMilis = 0;
     TickList  tickList;

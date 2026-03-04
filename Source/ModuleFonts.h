@@ -14,7 +14,7 @@ public:
 	const std::vector<Font>&	getFonts() const { return fonts; }
 	const Font getFont(Font::FontIdx idx) const 
 	{ 
-		_ASSERTE(idx < fonts.size()); 
+		_ASSERTE((UINT)idx < fonts.size());
 		return fonts[(UINT)idx]; 
 	}
 

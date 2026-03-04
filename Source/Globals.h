@@ -1,5 +1,11 @@
 #pragma once
 
+#if defined(ENGINE_API)
+/* do nothing. */
+#elif defined(_MSC_VER)
+#define ENGINE_API __declspec(dllexport)
+#endif
+
 #define NOMINMAX
 #define INITGUID
 

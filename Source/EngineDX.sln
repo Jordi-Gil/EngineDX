@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXTex", "3rdParty\Dire
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXTK12", "3rdParty\DirectXTK12\DirectXTK12.vcxproj", "{46190107-27DF-43C1-970E-04E489CBE072}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameplaySystems", "GameplaySystems\GameplaySystems.vcxproj", "{F5268D3F-B67D-4815-B437-2B9B9227CE26}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,10 @@ Global
 		{46190107-27DF-43C1-970E-04E489CBE072}.Debug|x64.Build.0 = Debug|x64
 		{46190107-27DF-43C1-970E-04E489CBE072}.Release|x64.ActiveCfg = Release|x64
 		{46190107-27DF-43C1-970E-04E489CBE072}.Release|x64.Build.0 = Release|x64
+		{F5268D3F-B67D-4815-B437-2B9B9227CE26}.Debug|x64.ActiveCfg = Debug|x64
+		{F5268D3F-B67D-4815-B437-2B9B9227CE26}.Debug|x64.Build.0 = Debug|x64
+		{F5268D3F-B67D-4815-B437-2B9B9227CE26}.Release|x64.ActiveCfg = Release|x64
+		{F5268D3F-B67D-4815-B437-2B9B9227CE26}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

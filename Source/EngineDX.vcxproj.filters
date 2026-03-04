@@ -241,6 +241,21 @@
     <ClCompile Include="ModuleFonts.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Factory.cpp">
+      <Filter>Core\GameplaySystems</Filter>
+    </ClCompile>
+    <ClCompile Include="Member.cpp">
+      <Filter>Core\GameplaySystems</Filter>
+    </ClCompile>
+    <ClCompile Include="GameplaySystems.cpp">
+      <Filter>Core\GameplaySystems</Filter>
+    </ClCompile>
+    <ClCompile Include="DemoScripting.cpp">
+      <Filter>Demos</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleGameplaySystems.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineDX.h">
@@ -507,6 +522,27 @@
     <ClInclude Include="ModuleFonts.h">
       <Filter>Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Script.h">
+      <Filter>Core\GameplaySystems</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory.h">
+      <Filter>Core\GameplaySystems</Filter>
+    </ClInclude>
+    <ClInclude Include="Creator.h">
+      <Filter>Core\GameplaySystems</Filter>
+    </ClInclude>
+    <ClInclude Include="Member.h">
+      <Filter>Core\GameplaySystems</Filter>
+    </ClInclude>
+    <ClInclude Include="GameplaySystems.h">
+      <Filter>Core\GameplaySystems</Filter>
+    </ClInclude>
+    <ClInclude Include="DemoScripting.h">
+      <Filter>Demos</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleGameplaySystems.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="EngineDX.ico">
@@ -555,6 +591,9 @@
     </Filter>
     <Filter Include="Demos">
       <UniqueIdentifier>{c3cf95a8-659c-4062-8516-2450b733cb68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\GameplaySystems">
+      <UniqueIdentifier>{06862db1-bb8e-4471-bc46-e669ef019453}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

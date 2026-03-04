@@ -9,6 +9,8 @@ class Mesh;
 class Material;
 class QuadTree;
 
+class Script;
+
 namespace tinygltf { class Model;  class Node; }
 
 struct RenderMesh
@@ -35,6 +37,7 @@ private:
         ComPtr<ID3D12Resource> texture;
     };
 
+    std::vector<Script*> scripts;
     std::vector<Model*> models;
     std::unordered_map<std::filesystem::path, SharedTexture> textures;
 
@@ -45,6 +48,7 @@ public:
     ~Scene();
 
     Model* loadModel(const char* fileName, const char* basePath);
+    Script* createScript(const std::string& name);
 
     void updateAnimations(float deltaTime);
     void updateWorldTransforms();

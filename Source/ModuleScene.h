@@ -8,6 +8,7 @@
 #include <memory>
 #include <span>
 
+class Script;
 class Scene;
 class Model;
 class Skybox;
@@ -17,17 +18,20 @@ class ModuleScene : public Module
 {
     typedef std::vector<std::shared_ptr<AnimationClip>> AnimationClipList;
     typedef std::vector<std::shared_ptr<Model> > ModelList;
+    typedef std::vector<std::shared_ptr<Script> > ScriptList;
     typedef std::vector<Label> LabelsList;
 
     AnimationClipList       animations;
     ModelList               models;
     LabelsList              labels;
+    ScriptList              scripts;
 
     std::unique_ptr<Scene>  scene;
     std::unique_ptr<Skybox> skybox;
 
 public:
 
+    typedef std::shared_ptr<Script> ScriptPtr;
     typedef std::shared_ptr<Model> ModelPtr;
     typedef std::shared_ptr<AnimationClip> ClipPtr;
     typedef std::span<const ModelPtr> ModelSpan;
@@ -46,7 +50,13 @@ public:
     const Scene* getScene()  const { return scene.get(); }
     const Skybox* getSkybox() const { return skybox.get(); }
 
-    bool isValid() const { return getModelCount() > 0 || getLabelCount() > 0; }
+    bool isValid() const { return getModelCount() > 0 || getLabelCount() > 0 || getScriptCount() > 0; }
+
+    // Script Management
+    UINT        addScript(const std::string& scriptName);
+    UINT        getScriptCount() const { return (UINT)scripts.size(); }
+    ScriptPtr   getScript(UINT index) const { _ASSERT(index < scripts.size()); return scripts[index]; }
+    void        clearScripts() { scripts.clear(); }
 
     // Models Management
     UINT        getModelCount() const { return (UINT)models.size(); }

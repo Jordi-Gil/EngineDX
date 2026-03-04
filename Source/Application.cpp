@@ -4,6 +4,7 @@
 #include "ModuleInput.h"
 #include "ModuleCamera.h"
 #include "ModuleResources.h"
+#include "ModuleGameplaySystems.h"
 #include "ModuleShaderDescriptors.h"
 #include "ModuleTargetDescriptors.h"
 #include "ModuleSamplers.h"
@@ -30,6 +31,7 @@ Application::Application(int argc, wchar_t** argv, void* hWnd)
     modules.push_back(staticBuffer = new ModuleStaticBuffer());
     modules.push_back(scene = new ModuleScene());
     modules.push_back(render = new ModuleRender());
+    modules.push_back(gameplaySystems = new ModuleGameplaySystems());
 
     if (argc > 1)
     {

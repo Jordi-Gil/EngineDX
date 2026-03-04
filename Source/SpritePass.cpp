@@ -105,7 +105,7 @@ void SpritePass::endRender(ID3D12GraphicsCommandList* commandList)
 
 void SpritePass::renderText(const char* text, UINT font, Vector2 position, Vector4 color, float rotation)
 { 
-	_ASSERTE(font < spriteFonts.Size());
+	_ASSERTE(font < (UINT)spriteFonts.size());
 	Vector2 origin = spriteFonts[font]->MeasureString(text) / 2.f;
 	spriteFonts[font]->DrawString(spriteBatch.get(), text, position, color, rotation, origin);
 }

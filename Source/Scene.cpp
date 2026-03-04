@@ -1,6 +1,7 @@
 #include "Globals.h"
 
 #include "Scene.h"
+#include "Script.h"
 #include "Model.h"
 #include "QuadTree.h"
 #include "Application.h"
@@ -57,6 +58,11 @@ Model* Scene::loadModel(const char* fileName, const char* basePath)
     LOG("Error loading %s: %s", fileName, error.c_str());
 
     return nullptr;
+}
+
+Script* Scene::createScript(const std::string& scriptName)
+{
+    return Factory::Create(scriptName);
 }
 
 void Scene::onRemoveModel(Model *model)
